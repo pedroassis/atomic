@@ -64,7 +64,8 @@
     return xhr('GET', src, options);
   };
 
-  exports['put'] = function (url, data, options) {
+  exports['put'] = function (url, data) {
+    var options;
     if(typeof(url) !== 'string'){
       url = url.url;
       data = url.data;
@@ -73,7 +74,8 @@
     return xhr('PUT', url, data, options);
   };
 
-  exports['post'] = function (url, data, options) {
+  exports['post'] = function (url, data) {
+    var options;
     if(typeof(url) !== 'string'){
       url = url.url;
       data = url.data;
