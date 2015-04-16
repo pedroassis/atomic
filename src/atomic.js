@@ -22,7 +22,7 @@
     return [result, req];
   };
 
-  var xhr = function (type, url, data) {
+  var xhr = function (type, url, data, options) {
     var methods = {
       success: function () {},
       error: function () {}
@@ -31,6 +31,11 @@
     var request = new XHR('MSXML2.XMLHTTP.3.0');
     request.open(type, url, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    for(var i in options){
+      if(options.hasOwnProperty(i)){
+        request.setRequestHeader(i, options[i]);
+      }
+    }
     request.onreadystatechange = function () {
       if (request.readyState === 4) {
         if (request.status >= 200 && request.status < 300) {
@@ -55,20 +60,30 @@
     return callbacks;
   };
 
-  exports['get'] = function (src) {
-    return xhr('GET', src);
+  exports['get'] = function (src, options) {
+    return xhr('GET', src, options);
   };
 
-  exports['put'] = function (url, data) {
-    return xhr('PUT', url, data);
+  exports['put'] = function (url, data, options) {
+    if(typeof(src) !== 'string'){
+      src = src.url;
+      data = src.data;
+      options = src;
+    }
+    return xhr('PUT', url, data, options);
   };
 
-  exports['post'] = function (url, data) {
-    return xhr('POST', url, data);
+  exports['post'] = function (url, data, options) {
+    if(typeof(src) !== 'string'){
+      src = src.url;
+      data = src.data;
+      options = src;
+    }
+    return xhr('POST', url, data, options);
   };
 
-  exports['delete'] = function (url) {
-    return xhr('DELETE', url);
+  exports['delete'] = function (url, options) {
+    return xhr('DELETE', url, options);
   };
 
   return exports;
