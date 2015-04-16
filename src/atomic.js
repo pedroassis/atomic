@@ -65,19 +65,19 @@
   };
 
   exports['put'] = function (url, data, options) {
-    if(typeof(src) !== 'string'){
-      src = src.url;
-      data = src.data;
-      options = src;
+    if(typeof(url) !== 'string'){
+      url = url.url;
+      data = url.data;
+      options = url;
     }
     return xhr('PUT', url, data, options);
   };
 
   exports['post'] = function (url, data, options) {
-    if(typeof(src) !== 'string'){
-      src = src.url;
-      data = src.data;
-      options = src;
+    if(typeof(url) !== 'string'){
+      url = url.url;
+      data = url.data;
+      options = url;
     }
     return xhr('POST', url, data, options);
   };
