@@ -23,6 +23,7 @@
   };
 
   var xhr = function (type, url, data, options) {
+    options = options || {};
     var methods = {
       success: function () {},
       error: function () {}
@@ -31,9 +32,11 @@
     var request = new XHR('MSXML2.XMLHTTP.3.0');
     request.open(type, url, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    for(var i in options){
-      if(options.hasOwnProperty(i)){
-        request.setRequestHeader(i, options[i]);
+    if(options.header){
+      for(var i in options.header){
+        if(options.hasOwnProperty(i)){
+          request.setRequestHeader(i, options.header[i]);
+        }
       }
     }
     request.onreadystatechange = function () {
@@ -45,7 +48,9 @@
         }
       }
     };
-    request.send(data);
+    if(data){
+      request.send(data);
+    }
     var callbacks = {
       success: function (callback) {
         methods.success = callback;
@@ -61,7 +66,7 @@
   };
 
   exports['get'] = function (src, options) {
-    return xhr('GET', src, options);
+    return xhr('GET', src, undefined, options);
   };
 
   exports['put'] = function (url, data) {
@@ -85,7 +90,7 @@
   };
 
   exports['delete'] = function (url, options) {
-    return xhr('DELETE', url, options);
+    return xhr('DELETE', url, undefined, options);
   };
 
   return exports;
